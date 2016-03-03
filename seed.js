@@ -1,10 +1,14 @@
 // This file allows us to seed our application with data
 // simply run: `node seed.js` from the root of this project folder.
 
+// require 
+var mongoose = require('mongoose');
+var conn = mongoose.connect('mongodb://localhost/tunely-app');
 var db = require("./models");
 
 var albumsList =[
-  // put data here!
+  {album_name: "Sheet One", artist_name: "Richie Hawtin", release_year: 1993 },
+  {album_name: "YosepH", artist_name: "Luke Vibert", release_year: 2003 },
 ];
 
 db.Album.remove({}, function(err, albums){
