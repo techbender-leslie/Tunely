@@ -1,0 +1,49 @@
+# Introduction
+
+Dear development team, it is a pleasure to be working with you. I hope you can use 
+technology and computer programming to make me a cool site to keep track of my 
+Acid Techno record collection. (Acid techno is just techno with a less mellow vibe.)
+
+Here's an example for inspiration: https://www.youtube.com/watch?v=Mo3StFtLIlM
+
+## Project Objectives
+
+I have a lot of acid techno albums on vinyl! ('I' being your client, not your lead dev. He just listens to music on 
+spotify and youtube like a good red blooded millennial.)
+
+I want to be able to keep track of all of these albums and I am tired of alphabetizing and 
+re-alphabitizing my shelves. I'm a hardware guy, and I created a complex system of led lights
+rigged to my album shelves. Each slot has a little red light that I can make light up to show
+me where the album is looking for if I input an ID number. 
+
+What I need is to be able to look through my albums,
+click each album to see details,
+create an new album,
+Edit an albums info,
+and delete an album. 
+
+I need each album to have a unique id. Is that going to cost me extra?
+
+Later I would like to add songs. I'm also a DJ. And a microbiologist and as a 
+hobby I make miniature furniture out of reclaimed toothpicks. 
+
+I would like to see each song on an album with the name of it and VERY importantly
+the BPMs. 
+
+This is less critical than the album part. All of that should be done first.  
+
+## Site User Roles - I'll be the only user. This will help me DJ at the 
+Lonely Toad Underground Speakeasy and Day Care Center. (my regular gig)
+
+## Functional Requirements Per User Role - Do the stuff to the data. Was it Schmutz? or Crud? I think it was Crud. 
+
+## Design Specifications - This sould look like acid techno sounds. Basically sharp as hell. Mostly black with some 
+bright as hell colors. 
+
+## Success Criteria - I can see an album, get the id from it to put into my LED shelf setup, and see the BPM of each song.
+
+## Content Plan - I will supply you with some seed data soon. 
+
+## Project Timeline - by this afternoon. Is that enough time? Maybe Monday would be OK. Would that cost extra?
+
+## Budget - free coffee, "exposure", and "experience" as well as "something for your portfolio". I don't want to pay money. I suck. 
