@@ -5,6 +5,25 @@ var express = require('express');
 // generate a new express app and call it 'app'
 var app = express();
 
+// dependencies
+var bodyParser = require('body-parser');
+var logger = require('morgan');
+var path = require('path');
+var ejs = require('ejs');
+
+// set the view engine to ejs
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/tunely-app');
+
+// app setup
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+app.set('views', './views');
+app.set('view engine', 'ejs');
+
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
 
@@ -72,6 +91,12 @@ app.get('/api', function api_index (req, res){
     ]
   });
 });
+
+
+// our routes
+
+var routes = require('./config/routes');
+app.use(routes);
 
 /**********
  * SERVER *
