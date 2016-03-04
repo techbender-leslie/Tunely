@@ -41,6 +41,7 @@ $(document).ready(function() {
       console.log("hi people")
   $.get('api/albums').success(function(albums){
     // for each render album
+    console.log(albums)
     albums.forEach(function(album){
       renderAlbum(album);
     });
@@ -54,7 +55,7 @@ function renderAlbum(album){
 
   var albumHtml =
   "        <!-- one album -->" +
-  "        <div class='row album' data-album-id='" + "HARDCODED ALBUM ID" + "'>" +
+  "        <div class='row album' data-album-id='" + album._id + "'>" +
   "          <div class='col-md-10 col-md-offset-1'>" +
   "            <div class='panel panel-default'>" +
   "              <div class='panel-body'>" +
@@ -67,7 +68,7 @@ function renderAlbum(album){
   "                    <ul class='list-group'>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Album Name:</h4>" +
-  "                        <span class='album-name'>" + "HARDCODED ALBUM NAME" + "</span>" +
+  "                        <span class='album-name'>" + album.album_name + "</span>" +
   "                      </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Artist Name:</h4>" +
