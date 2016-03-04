@@ -47,6 +47,11 @@ $(document).ready(function() {
 
 // this function takes a single album and renders it to the page
 function renderAlbum(album) {
+  $(document).ready(function(){
+    $("#album").append("albumHtml");
+    console.log('app.js loaded!');
+  });
+  
   console.log('rendering album:', album);
 
   var albumHtml =
@@ -90,3 +95,5 @@ function renderAlbum(album) {
 
   // render to the page with jQuery
 }
+
+renderAlbum(sampleAlbums[0]);
