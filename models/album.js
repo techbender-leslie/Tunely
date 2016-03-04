@@ -12,4 +12,4 @@ var AlbumSchema = mongoose.Schema({
 var Album = moogose.model('Album', AlbumSchema);
 
 //exporting Albums to server.js
-module.export = Album; 
+module.exports = Album; 
