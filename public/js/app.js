@@ -38,7 +38,7 @@ $(document).ready(function() {
 function buildTracksHtml(tracks) {
   var trackText = "  &ndash; ";
   tracks.forEach(function(track) {
-     TrackText = TrackText + "(" + track.track_num + ") " + track.track_name + track.bpm + " &ndash; ";
+     TrackText = trackText + "(" + track.track_num + ") " + track.track_name + track.bpm + " &ndash; ";
   });
 
   var tracksHtml  =
@@ -93,7 +93,7 @@ function renderAlbum(album){
   // "                        <h4 class='inline-header'>Released Year:</h4>" +
   // "                        <span class='album-releaseDate'>" + album.release_year + "</span>" +
   // "                      </li>" +
-    buildSongsHtml(album.songs) +
+    buildTracksHtml(album.tracks) +
 
   "                    </ul>" +
   "                  </div>" +
