@@ -72,7 +72,7 @@ app.post('/api/albums', function albumCreate(req, res){
 });
 
 //Delete 
-app.get('/api/alumb/:id', function albumDestroy(req,res) {
+app.get('/api/albums/:id', function albumDestroy(req,res) {
   // database remove album by ID
   db.Album.removeById(req.params.id, function(err, album){
     if (err) {
