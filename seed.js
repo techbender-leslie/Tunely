@@ -36,26 +36,26 @@ albumList.push({
 
 var sampleTracks = [];
 
-sampleTracks.push({ name: 'Swamped',
-                   trackNumber: 1
+sampleTracks.push({ track_name: 'Swamped',
+                   track_num: 1
 });
-sampleTracks.push({ name: "Heaven's a Lie",
-                   trackNumber: 2
+sampleTracks.push({ track_name: "Heaven's a Lie",
+                   track_num: 2
 });
-sampleTracks.push({ name: 'Daylight Dancer',
-                   trackNumber: 3
+sampleTracks.push({ track_name: 'Daylight Dancer',
+                   track_num: 3
 });
-sampleTracks.push({ name: 'Humane',
-                   trackNumber: 4
+sampleTracks.push({ track_name: 'Humane',
+                   track_num: 4
 });
-sampleTracks.push({ name: 'Self Deception',
-                   trackNumber: 5
+sampleTracks.push({ track_name: 'Self Deception',
+                   track_num: 5
 });
-sampleTracks.push({ name: 'Aeon',
-                   trackNumber: 6
+sampleTracks.push({ track_name: 'Aeon',
+                   track_num: 6
 });
-sampleTracks.push({ name: 'Tight Rope',
-                   trackNumber: 7
+sampleTracks.push({ track_name: 'Tight Rope',
+                   track_num: 7
 });
 
 
@@ -72,6 +72,9 @@ db.Album.remove({}, function(err, albums){
     if (err) { return console.log('ERROR', err); }
     console.log("all albums:", albums);
     console.log("created", albums.length, "albums");
+    albums.forEach(function(album){
+      console.log(album.tracks)
+    })
     process.exit();
   });
 
