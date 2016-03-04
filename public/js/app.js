@@ -31,10 +31,6 @@ $(document).ready(function() {
   // form needs to be inside ready function to work
 }); 
 
-
- 
-
-
 function buildTracksHtml(tracks) {
   var trackText = "  &ndash; ";
   tracks.forEach(function(track) {
@@ -43,7 +39,7 @@ function buildTracksHtml(tracks) {
 
   var tracksHtml  =
   "                      <li class='list-group-item'>" +
-  "                        <h4 class='inline-header'>Songs:</h4>" +
+  "                        <h4 class='inline-header'>Tracks:</h4>" +
   "                         <span>" + trackText + "</span>" +
   "                      </li>";
   return tracksHtml;
@@ -55,11 +51,6 @@ function buildTracksHtml(tracks) {
 //   bpm: Number,
 //   notes: String
 // });
-
-
-
-
-
 
 // this function takes a single album and renders it to the page
 function renderAlbum(album){
