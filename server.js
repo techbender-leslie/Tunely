@@ -14,7 +14,7 @@ var db = require('./models');
 
 // set the view engine to ejs
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/tunely-app');
+mongoose.connect('mongodb://localhost:27017/tunely');
 
 // app setup
 app.use(logger('dev'));
