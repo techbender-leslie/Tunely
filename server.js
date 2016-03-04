@@ -72,7 +72,36 @@ app.post('/api/albums', function albumCreate(req, res){
 });
 
 
+app.get('/api/albums/:id', function albumShow(req, res) {
+  console.log(req.params.id);
+  db.Album.findOne({_id: req.params.id}, function(err, album) {
+    res.json(album);
+  });
+});
 
+
+app.post('/api/albums/:albumId/tracks', function tracksCreate(req, res) {
+  console.log('body', req.body);
+  db.Album.findOne({_id: req.params.albumId}, function(err, album) {
+    if (err) { console.log('error', err); }
+
+    var track = new db.Track(req.body);
+    album.tracks.push(track);
+    album.save(function(err, savedAlbum) {
+      if (err) { console.log('error', err); }
+      console.log('saved album: ', savedAlbum);
+      res.json(track);
+    });
+  });
+});
+
+//   db.Track.create(req.body, function(err, track) {
+//     if (err) {
+//       console.log('track', err);
+//     }
+//     console.log(track);
+//     res.json(track);
+// });
 
 /**********
  * SERVER *
