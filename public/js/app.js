@@ -4,6 +4,7 @@ $(document).ready(function() {
   // when successful load albums function
   $.get('api/albums').success(function(albums){
     // for each render album
+    console.log(albums)
     albums.forEach(function(album){
       renderAlbum(album);
     });
