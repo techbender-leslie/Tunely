@@ -38,6 +38,7 @@ sampleAlbums.push({
 $(document).ready(function() {
   console.log('app.js loaded!');
   // when successful load albums function
+      console.log("hi people")
   $.get('api/albums').success(function(albums){
     // for each render album
     albums.forEach(function(album){
@@ -91,7 +92,6 @@ function renderAlbum(album){
   "          <!-- end one album -->";
 
   // render to the page with jQuery
+  $('#albums').prepend(albumHtml);
 }
 
-//jQuery to append albumHtml into #albums
-$('#albums').prepend(albumHtml);
