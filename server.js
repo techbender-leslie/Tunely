@@ -71,8 +71,18 @@ app.post('/api/albums', function albumCreate(req, res){
   });
 });
 
-
-
+//Delete 
+app.get('/api/alumb/:id', function albumDestroy(req,res) {
+  // database remove album by ID
+  db.Album.removeById(req.params.id, function(err, album){
+    if (err) {
+      console.log('error', err);
+    } 
+    // remove if not needed for console logging
+    console.log(album._id);
+    res.redirect (200, "/");
+  });
+});
 
 /**********
  * SERVER *
