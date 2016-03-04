@@ -2,8 +2,7 @@
 // simply run: `node seed.js` from the root of this project folder.
 
 // require 
-var mongoose = require('mongoose');
-var conn = mongoose.connect('mongodb://localhost/tunely-app');
+
 var db = require("./models");
 
 var albumsList =[]; 
