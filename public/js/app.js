@@ -16,7 +16,7 @@ $(document).ready(function() {
     event.preventDefault();
     // serialize form data 
     var formData = $(this).serialize();
-    console.log('formData', formData);
+    console.log(formData);
     $.post('/api/albums', formData, function(album) {
       // console log the output
       console.log('album after POST', album);

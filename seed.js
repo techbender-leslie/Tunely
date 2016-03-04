@@ -5,21 +5,21 @@
 
 var db = require("./models");
 
-var albumsList =[]; 
+var albumList =[]; 
 
-albumsList.push({
+albumList.push({
   album_name: "Sheet One", 
   artist_name: "Richie Hawtin", 
   release_year: 1993 
 }); 
 
-albumsList.push({
+albumList.push({
   album_name: "YosepH", 
   artist_name: "Luke Vibert", 
   release_year: 2003 
 }); 
 
-albumsList.push({
+albumList.push({
   album_name: "Chosen Lords", 
   artist_name: "Aphex Twin", 
   release_year: 2006 
