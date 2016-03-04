@@ -1,12 +1,9 @@
 // SERVER-SIDE JAVASCRIPT
 
-//require express in our app
+// dependencies
 var express = require('express');
-// generate a new express app and call it 'app'
 var app = express();
 var mongoose = require('mongoose');
-
-// dependencies
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var path = require('path');
@@ -64,8 +61,17 @@ app.get('/api/albums', function albumsIndex(req, res) {
 });
 
 // POST  /api/albums
-app.post('/api/albums', function albumsCreate(req, res){
+app.post('/api/albums', function albumCreate(req, res){
   console.log('body', req.body);
+
+  // Connect the POST route to the database
+  db.Album.create(req.body, function(err, album){
+    if (err) {
+      console.log('error', err);
+    } 
+    console.log(album);
+    res.json(album); 
+  });
 });
 
 

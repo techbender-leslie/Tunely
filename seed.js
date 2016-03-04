@@ -19,9 +19,15 @@ albumsList.push({
   release_year: 2003 
 }); 
 
+albumsList.push({
+  album_name: "Chosen Lords", 
+  artist_name: "Aphex Twin", 
+  release_year: 2006 
+});
+
 db.Album.remove({}, function(err, albums){
 
-  db.Album.create(albumsList, function(err, albums){
+  db.Album.create(albumList, function(err, albums){
     if (err) { return console.log('ERROR', err); }
     console.log("all albums:", albums);
     console.log("created", albums.length, "albums");
