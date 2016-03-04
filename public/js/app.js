@@ -1,15 +1,32 @@
 
+// render the albums index on the page
 $(document).ready(function() {
   console.log('app.js loaded!');
   // when successful load albums function
   $.get('api/albums').success(function(albums){
     // for each render album
-    console.log(albums)
+    console.log(albums);
     albums.forEach(function(album){
       renderAlbum(album);
     });
   });
-});
+
+// Use jquery to capture the form values
+  $('#album-form form').submit(function(event) {
+    event.preventDefault();
+    // serialize form data 
+    var formData = $(this).serialize();
+    console.log(formData);
+    $.post('/api/albums', formData, function(album) {
+      // console log the output
+      console.log('album after POST', album);
+      //render the server's album data
+      renderAlbum(album);  
+    });
+    $(this).trigger("reset");
+  });
+  // form needs to be inside ready function to work
+}); 
 
 // this function takes a single album and renders it to the page
 function renderAlbum(album){
