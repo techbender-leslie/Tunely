@@ -80,6 +80,7 @@ app.get('/api/albums/:id', function albumDestroy(req,res) {
     } 
     // remove if not needed for console logging
     console.log(album._id);
+    //status 200 and redirect back to root directory
     res.redirect (200, "/");
   });
 });
