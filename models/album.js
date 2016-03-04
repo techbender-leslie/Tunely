@@ -1,4 +1,5 @@
 var mongoose = require("mongoose"); // require mongoose
+var TrackSchema = require('./track'); // require track schema 
 
 //Album Schema created
 var AlbumSchema = mongoose.Schema({
@@ -9,7 +10,7 @@ var AlbumSchema = mongoose.Schema({
 });
 
 //declaring variable Album exporting
-var Album = moogose.model('Album', AlbumSchema);
+var Album = mongoose.model('Album', AlbumSchema);
 
 //exporting Albums to server.js
 module.exports = Album; 
