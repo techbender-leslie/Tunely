@@ -35,22 +35,19 @@ sampleAlbums.push({
 /* end of hard-coded data */
 
 
-
-
 $(document).ready(function() {
   console.log('app.js loaded!');
+  // when successful load albums function
+  $.get('api/albums').success(function(albums){
+    // for each render album
+    albums.forEach(function(album){
+      renderAlbum(album);
+    });
+  });
 });
 
-
-
-
-
 // this function takes a single album and renders it to the page
-function renderAlbum(album) {
-  $(document).ready(function(){
-    $("#album").append("albumHtml");
-    console.log('app.js loaded!');
-  });
+function renderAlbum(album){
   
   console.log('rendering album:', album);
 
@@ -96,4 +93,5 @@ function renderAlbum(album) {
   // render to the page with jQuery
 }
 
-renderAlbum(sampleAlbums[0]);
+//jQuery to append albumHtml into #albums
+$('#albums').prepend(albumHtml);

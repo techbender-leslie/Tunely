@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 var path = require('path');
 var ejs = require('ejs');
+var db = require('./models');
 
 // set the view engine to ejs
 var mongoose = require('mongoose');
