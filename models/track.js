@@ -12,4 +12,4 @@ var TrackSchema = mongoose.Schema({
 var Track = mongoose.model('Track', TrackSchema);
 
 //Exporting Track to server.js
-module.export= Track;
+module.exports = Track;
