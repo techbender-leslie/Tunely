@@ -1,12 +1,14 @@
 var mongoose = require("mongoose"); // require mongoose
-// var TrackSchema = require('./track'); // require track schema 
+var Schema = mongoose.Schema;
+
+var Track = require('./track');
 
 //Album Schema created
-var AlbumSchema = mongoose.Schema({
+var AlbumSchema = new Schema({
   album_name: String,
   artist_name: String,
   release_year: Number,
-  // track: [TrackSchema]
+  tracks: [Track.schema]  //how is this different than TrackSchema
 });
 
 //declaring variable Album exporting

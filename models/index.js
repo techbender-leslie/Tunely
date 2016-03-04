@@ -1,5 +1,9 @@
 var mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/tunely");
 
-module.exports.Album = require("./album");
-// module.exports.Track = require("./track");
+var Album = require('./album');
+var Track = require('./track');
+
+module.exports.Album = Album;
+module.exports.Track = Track;
+
