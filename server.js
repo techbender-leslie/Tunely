@@ -92,6 +92,16 @@ app.get('/api', function api_index (req, res){
   });
 });
 
+// GET /api/albums
+app.get('/api/albums', function albumsIndex (req, res){
+  // find in database 
+  db.Albums.find({}, function(err, albums){
+    res.json(albums);
+  }); 
+}); 
+
+
+
 
 // our routes
 
