@@ -63,6 +63,11 @@ app.get('/api/albums', function albumsIndex(req, res) {
   });
 });
 
+// POST  /api/albums
+app.post('/api/albums', function albumsCreate(req, res){
+  console.log('body', req.body);
+});
+
 
 // our routes
 

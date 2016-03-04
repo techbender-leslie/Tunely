@@ -1,15 +1,28 @@
 
+
 $(document).ready(function() {
   console.log('app.js loaded!');
   // when successful load albums function
   $.get('api/albums').success(function(albums){
     // for each render album
-    console.log(albums)
+    console.log(albums);
     albums.forEach(function(album){
       renderAlbum(album);
     });
   });
-});
+
+// Use jQuery to capture the form values and serialize them. console.log the output.
+  $('#album-form form').submit(function(event) {
+    event.preventDefault();
+    var formData = $(this).serialize();
+    console.log('formData', formData);
+    $.post('/api/albums', formData, function(album) {
+      console.log('album after POST', album);
+      renderAlbum(album);  //render the server's response
+    });
+    $(this).trigger("reset");
+  });
+}); 
 
 // this function takes a single album and renders it to the page
 function renderAlbum(album){
