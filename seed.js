@@ -6,10 +6,19 @@ var mongoose = require('mongoose');
 var conn = mongoose.connect('mongodb://localhost/tunely-app');
 var db = require("./models");
 
-var albumsList =[
-  {album_name: "Sheet One", artist_name: "Richie Hawtin", release_year: 1993 },
-  {album_name: "YosepH", artist_name: "Luke Vibert", release_year: 2003 },
-];
+var albumsList =[]; 
+
+albumsList.push({
+  album_name: "Sheet One", 
+  artist_name: "Richie Hawtin", 
+  release_year: 1993 
+}); 
+
+albumsList.push({
+  album_name: "YosepH", 
+  artist_name: "Luke Vibert", 
+  release_year: 2003 
+}); 
 
 db.Album.remove({}, function(err, albums){
 
