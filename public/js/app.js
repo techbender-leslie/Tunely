@@ -47,7 +47,7 @@ function handleDeleteAlbumClick(event){
   console.log("delete" + albumId);
   $.ajax({
     method: 'DELETE', 
-    url: ('/api/albums' + albumId), 
+    url: ('/api/albums/' + albumId), 
     success: function(){
       console.log("Album deleted"); 
       $('[data-album-id=' + albumId + ']').remove();
