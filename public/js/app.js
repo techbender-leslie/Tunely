@@ -44,10 +44,13 @@ function handleNewTrackSubmit(e) {
   var albumId = $('#trackModal').data('album-id');
   var trackName = $('#trackName').val();
   var trackNumber = $('#trackNumber').val();
+  var trackBpm = $('#trackBpm').val();
+
 
   var formData = {
     track_name: trackName,
-    track_num: trackNumber
+    track_num: trackNumber, 
+    bpm: trackBpm
   };
 
   var postUrl = '/api/albums/' + albumId + '/tracks';
@@ -68,20 +71,21 @@ function handleNewTrackSubmit(e) {
       //clear form
       $('#trackName').val('');
       $('#trackNumber').val('');
+      $('#trackBpm').val('');
       $('#trackModal').modal('hide');
 
     });
 }
 
 function buildTracksHtml(tracks) {
-  var trackText = "  &ndash; ";
+  var trackText = " ";
   tracks.forEach(function(track) {
-     trackText = trackText + "(" + track.track_num + ") " + track.track_name + track.bpm + " &ndash; ";
+     trackText = trackText + "#" + track.track_num + " " + track.track_name + "  &ndash; BPM: " + track.bpm + " <br>";
   });
 
   var tracksHtml  =
   "                      <li class='list-group-item'>" +
-  "                        <h4 class='inline-header'>Tracks:</h4>" +
+  "                        <h4 class='inline-header'>Tracks: </h4> <br>" +
   "                         <span>" + trackText + "</span>" +
   "                      </li>";
   return tracksHtml;
