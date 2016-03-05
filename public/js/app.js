@@ -47,7 +47,7 @@ function handleNewTrackSubmit(e) {
 
   var formData = {
     track_name: trackName,
-    track_name: trackNumber
+    track_num: trackNumber
   };
 
   var postUrl = '/api/albums/' + albumId + '/tracks';
