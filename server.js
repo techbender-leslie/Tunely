@@ -112,7 +112,7 @@ app.put('/api/albums/:id', function updateAlbum(req, res) {
 });
 
 
-// DELETE /api/albums:id 
+///////////////// DELETE /api/albums:id ///////////////////
 app.delete('/api/albums/:id', function albumDestroy(req,res) {
   console.log(req.params.id);
   // database remove album by ID

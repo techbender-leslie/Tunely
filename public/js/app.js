@@ -44,18 +44,7 @@ $('#albums').on('click', '.add-track', function(e) {
 });
 
 ///////////////// UPDATE ALBUM ////////////////////////////////
-function getAlbumInfoById(id) {
-  return $('[data-album-id=' + id + ']');
-}
 
-function handleUpdateAlbumClick(event) {
-  var albumId = $(this).parents('.album').data('album-id');
-  var $albumInfo = getAlbumInfoById(albumId);
-
-  console.log('update' + albumId);
-}
-  
-  
 function handleSaveChangesClick()
   $ajax({
     method: 'PUT',
@@ -65,7 +54,6 @@ function handleSaveChangesClick()
 
     }
   })
-
 
 //////////// DELETE ALBUM ////////////////////////////////////////////
 
