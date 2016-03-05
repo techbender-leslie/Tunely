@@ -56,7 +56,7 @@ app.get('/api/albums', function albumsIndex(req, res) {
 });
 
 
-// POST  /api/albums
+// POST /api/albums
 app.post('/api/albums', function albumCreate(req, res){
   console.log('body', req.body);
 
@@ -70,22 +70,7 @@ app.post('/api/albums', function albumCreate(req, res){
   });
 });
 
-
-//Delete 
-// app.get('/api/albums/:id', function albumDestroy(req,res) {
-//   // database remove album by ID
-//   db.Album.removeById(req.params.id, function(err, album){
-//     if (err) {
-//       console.log('error', err);
-//     } 
-//     // remove if not needed for console logging
-//     console.log(album._id);
-//     //status 200 and redirect back to root directory
-//     res.redirect (200, "/");
-//   });
-// });
-
-
+// GET /api/albums/:id
 app.get('/api/albums/:id', function albumShow(req, res) {
   console.log(req.params.id);
   db.Album.findOne({_id: req.params.id}, function(err, album) {
@@ -93,7 +78,7 @@ app.get('/api/albums/:id', function albumShow(req, res) {
   });
 });
 
-
+// POST /api/albums/:id/tracks
 app.post('/api/albums/:albumId/tracks', function tracksCreate(req, res) {
   console.log('body', req.body);
   db.Album.findOne({_id: req.params.albumId}, function(err, album) {
@@ -109,6 +94,8 @@ app.post('/api/albums/:albumId/tracks', function tracksCreate(req, res) {
   });
 });
 
+// UPDATE 
+
 //   db.Track.create(req.body, function(err, track) {
 //     if (err) {
 //       console.log('track', err);
@@ -116,6 +103,22 @@ app.post('/api/albums/:albumId/tracks', function tracksCreate(req, res) {
 //     console.log(track);
 //     res.json(track);
 // });
+
+
+// DELETE /api/albums:id 
+app.get('/api/albums/:id', function albumDestroy(req,res) {
+  // database remove album by ID
+  db.Album.removeById(req.params.id, function(err, album){
+    if (err) {
+      console.log('error', err);
+    } 
+    // remove if not needed for console logging
+    console.log(album._id);
+    //status 200 and redirect back to root directory
+    res.redirect (200, "/");
+  });
+});
+
 
 
 /**********

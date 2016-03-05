@@ -37,7 +37,25 @@ $('#albums').on('click', '.add-track', function(e) {
     $('#trackModal').modal();
 });
     $('#saveTrack').on('click', handleNewTrackSubmit); 
+    $('#albums').on('click', '.delete-album', handleDeleteAlbumClick); 
 });
+
+//////////// DELETE ///////////////
+
+function handleDeleteAlbumClick(event){
+  var albumId = $(this).parents('.album').data('album-id'); 
+  console.log("delete" + albumId);
+  $.ajax({
+    method: 'DELETE', 
+    url: ('/api/albums' + albumId), 
+    success: function(){
+      console.log("Album deleted"); 
+      $('[data-album-id=' + albumId + ']').remove();
+    }
+  });
+}
+
+//////////// END DELETE ///////////////
 
 // handles the modal fields and POSTing the form to the server
 function handleNewTrackSubmit(e) {
