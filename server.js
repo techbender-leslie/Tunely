@@ -106,9 +106,10 @@ app.post('/api/albums/:albumId/tracks', function tracksCreate(req, res) {
 
 
 // DELETE /api/albums:id 
-app.get('/api/albums/:id', function albumDestroy(req,res) {
+app.delete('/api/albums/:id', function albumDestroy(req,res) {
+  console.log(req.params.id);
   // database remove album by ID
-  db.Album.removeById(req.params.id, function(err, album){
+  db.Album.remove({_id: req.params.id}, function(err, album){
     if (err) {
       console.log('error', err);
     } 
