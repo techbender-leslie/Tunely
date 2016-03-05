@@ -41,21 +41,56 @@ $('#albums').on('click', '.add-track', function(e) {
 });
     $('#saveTrack').on('click', handleNewTrackSubmit); 
     $('#albums').on('click', '.delete-album', handleDeleteAlbumClick); 
+    $('#albums').on('click', '.update-album', handleEditalbumclick);
 });
+
 
 ///////////////// UPDATE ALBUM ////////////////////////////////
 
-function handleSaveChangesClick()
-  $ajax({
-    method: 'PUT',
-    ur: ('/api/albums/' + albumId),
-    success: function(data) {
-      console.log('Album updated');
+// function handleSaveChangesClick()
+//   $ajax({
+//     method: 'PUT',
+//     ur: ('/api/albums/' + albumId),
+//     success: function(data) {
+//       console.log('Album updated');
 
-    }
-  })
+//     }
+//   })
 
 //////////// DELETE ALBUM ////////////////////////////////////////////
+
+/////////////* End document ready *///////////////////
+
+// function getAlbumRowById(id) {
+//   return $('[data-album-id=' + id + ']');
+// }
+
+function handleEditAlbumClick(e) {
+  var albumId = $(this).parents('.album').data('album-id');
+  var $gomez = $('[data-album-id=' + albumId + ']');
+
+  // var $albumRow = getAlbumRowById(albumId);
+
+  console.log('attempt to edit id', albumId);
+
+  // replace edit button with save button
+  $(this).parent().find('.btn').hide();
+  $(this).parent().find('.default-hidden').show();
+
+  // replace current spans with inputs
+  var albumName = $gomez.find('span.album-name').text();
+  $gomez.find('span.album-name').html('<input class="edit-album-name" value="' + albumName + '"></input>');
+
+  var artistName = $gomez.find('span.artist-name').text();
+  $gomez.find('span.artist-name').html('<input class="edit-artist-name" value="' + artistName + '"></input>');
+
+  var releaseDate = $gomez.find('span.album-release-date').text();
+  $gomez.find('span.album-release-date').html('<input class="edit-album-release-date" value="' + releaseDate + '"></input>');
+}
+
+
+//////////// DELETE ///////////////
+
 
 function handleDeleteAlbumClick(event){
   var albumId = $(this).parents('.album').data('album-id'); 
@@ -174,6 +209,7 @@ function renderAlbum(album){
 
   "              <div class='panel-footer'>" +
   "                <button class='btn btn-primary add-track'>Add Track</button>" +
+  "                <button class='btn btn-info update-album'>Edit Album</button>" +
   "                <button class='btn btn-danger delete-album'>Delete Album</button>" +
   "                 <button class='btn btn-info edit-album'>Edit Album</button>" +
   "              </div>" +
