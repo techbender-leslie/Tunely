@@ -94,15 +94,24 @@ app.post('/api/albums/:albumId/tracks', function tracksCreate(req, res) {
   });
 });
 
-// UPDATE 
-
-//   db.Track.create(req.body, function(err, track) {
-//     if (err) {
-//       console.log('track', err);
-//     }
-//     console.log(track);
-//     res.json(track);
-// });
+// UPDATE /api/albums:id 
+app.put('/api/albums/:id', function updateAlbum(req, res){
+  console.log('uopdating id: ', req.params.id); 
+  console.log('received body: ', req.body);
+  db.Album.findOne({_id: req.params.id}, function(err, foundAlbum) {
+    if (err) { console.log('error', err); }
+    
+    //// POSSIBLE ISSUE HERE! //// 
+    foundAlbum.albumName = req.body.albumName;
+    foundAlbum.artistName = req.body.artistName; 
+    foundAlbum.releaseYear = req.body.releaseYear; 
+    foundAlbum.save(function(err, saved){
+      if(err) { 
+        console.log('error', err); 
+      } res.json(saved); 
+    });
+  });
+});
 
 
 // DELETE /api/albums:id 

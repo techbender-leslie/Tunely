@@ -13,3 +13,9 @@
   vertical-align: baseline;
   margin-right: 12px;
 }
+
+
+/* hide put button */
+.put-album {
+	display: none; 
+}
