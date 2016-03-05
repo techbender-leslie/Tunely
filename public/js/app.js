@@ -9,7 +9,6 @@ $(document).ready(function() {
     console.log(albums);
 
     albums.forEach(function(album) {  //renders each album in db
-
       renderAlbum(album);
     });
   });
@@ -28,13 +27,56 @@ $(document).ready(function() {
     });
     $(this).trigger("reset");
   });
-  // form needs to be inside ready function to work
-}); 
+  // form needs to be inside ready function to workk
+
+$('#albums').on('click', '.add-track', function(e) {
+    console.log('asdfasdfasdf');
+    var id= $(this).parents('.album').data('album-id'); // "5665ff1678209c64e51b4e7b"
+    console.log('id',id);
+    $('#trackModal').data('album-id', id);
+    $('#trackModal').modal();
+});
+    $('#saveTrack').on('click', handleNewTrackSubmit); 
+});
+
+// handles the modal fields and POSTing the form to the server
+function handleNewTrackSubmit(e) {
+  var albumId = $('#trackModal').data('album-id');
+  var trackName = $('#trackName').val();
+  var trackNumber = $('#trackNumber').val();
+
+  var formData = {
+    track_name: trackName,
+    track_name: trackNumber
+  };
+
+  var postUrl = '/api/albums/' + albumId + '/tracks';
+  console.log('posting to ', postUrl, ' with data ', formData);
+
+  $.post(postUrl, formData)
+    .success(function(track) {
+      console.log('track', track);
+
+      // re-get full album and render on page
+      $.get('/api/albums/' + albumId).success(function(album) {
+        //remove old entry
+        $('[data-album-id='+ albumId + ']').remove();
+        // render a replacement
+        renderAlbum(album);
+      });
+
+      //clear form
+      $('#trackName').val('');
+      $('#trackNumber').val('');
+      $('#trackModal').modal('hide');
+
+    });
+}
 
 function buildTracksHtml(tracks) {
   var trackText = "  &ndash; ";
   tracks.forEach(function(track) {
-     TrackText = trackText + "(" + track.track_num + ") " + track.track_name + track.bpm + " &ndash; ";
+     trackText = trackText + "(" + track.track_num + ") " + track.track_name + track.bpm + " &ndash; ";
   });
 
   var tracksHtml  =
@@ -94,7 +136,7 @@ function renderAlbum(album){
   "              </div>" + // end of panel-body
 
   "              <div class='panel-footer'>" +
-  "                <button class='btn btn-primary add-song'>Add Song</button>" +
+  "                <button class='btn btn-primary add-track'>Add Track</button>" +
   "                <button class='btn btn-danger delete-album'>Delete Album</button>" +
   "              </div>" +
 
