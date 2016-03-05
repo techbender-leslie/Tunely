@@ -13,6 +13,7 @@ $(document).ready(function() {
     });
   });
 
+//////////////////////////////////////////////////////
 // Use jquery to capture the form values
   $('#album-form form').submit(function(event) {
     event.preventDefault();
@@ -29,6 +30,8 @@ $(document).ready(function() {
   });
   // form needs to be inside ready function to workk
 
+//////////////////////////////////////////////////////////
+
 $('#albums').on('click', '.add-track', function(e) {
     console.log('asdfasdfasdf');
     var id= $(this).parents('.album').data('album-id'); // "5665ff1678209c64e51b4e7b"
@@ -40,7 +43,31 @@ $('#albums').on('click', '.add-track', function(e) {
     $('#albums').on('click', '.delete-album', handleDeleteAlbumClick); 
 });
 
-//////////// DELETE ///////////////
+///////////////// UPDATE ALBUM ////////////////////////////////
+function getAlbumInfoById(id) {
+  return $('[data-album-id=' + id + ']');
+}
+
+function handleUpdateAlbumClick(event) {
+  var albumId = $(this).parents('.album').data('album-id');
+  var $albumInfo = getAlbumInfoById(albumId);
+
+  console.log('update' + albumId);
+}
+  
+  
+function handleSaveChangesClick()
+  $ajax({
+    method: 'PUT',
+    ur: ('/api/albums/' + albumId),
+    success: function(data) {
+      console.log('Album updated');
+
+    }
+  })
+
+
+//////////// DELETE ALBUM ////////////////////////////////////////////
 
 function handleDeleteAlbumClick(event){
   var albumId = $(this).parents('.album').data('album-id'); 
@@ -160,6 +187,7 @@ function renderAlbum(album){
   "              <div class='panel-footer'>" +
   "                <button class='btn btn-primary add-track'>Add Track</button>" +
   "                <button class='btn btn-danger delete-album'>Delete Album</button>" +
+  "                 <button class='btn btn-info edit-album'>Edit Album</button>" +
   "              </div>" +
 
   "            </div>" +

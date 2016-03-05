@@ -1,11 +1,15 @@
 .jumbotron {
-  background-image: url(/images/background1.jpg);
+  background-image: url(/images/acid_freak.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   color: #EEE;
 }
 .jumbotron .container {
-  height: 350px;
+  height: 400px;
+}
+
+.jumbotron .container h1 {
+		margin-top: -15px;
 }
 
 .inline-header {
@@ -13,3 +17,12 @@
   vertical-align: baseline;
   margin-right: 12px;
 }
+
+.edit-album,
+.delete-album {
+	float: right;
+	margin-left: 3px;
+	margin-right: 3px;
+}
+
+

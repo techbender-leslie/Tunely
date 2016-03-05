@@ -59,7 +59,6 @@ app.get('/api/albums', function albumsIndex(req, res) {
 // POST /api/albums
 app.post('/api/albums', function albumCreate(req, res){
   console.log('body', req.body);
-
   // Connect the POST route to the database
   db.Album.create(req.body, function(err, album){
     if (err) {
@@ -82,8 +81,9 @@ app.get('/api/albums/:id', function albumShow(req, res) {
 app.post('/api/albums/:albumId/tracks', function tracksCreate(req, res) {
   console.log('body', req.body);
   db.Album.findOne({_id: req.params.albumId}, function(err, album) {
-    if (err) { console.log('error', err); }
-
+    if (err) { 
+      console.log('error', err); 
+    }
     var track = new db.Track(req.body);
     album.tracks.push(track);
     album.save(function(err, savedAlbum) {
@@ -94,15 +94,22 @@ app.post('/api/albums/:albumId/tracks', function tracksCreate(req, res) {
   });
 });
 
-// UPDATE 
-
-//   db.Track.create(req.body, function(err, track) {
-//     if (err) {
-//       console.log('track', err);
-//     }
-//     console.log(track);
-//     res.json(track);
-// });
+/////////////////////////////////// UPDATE Album
+app.put('/api/albums/:id', function updateAlbum(req, res) {
+  console.log('body', req.body);
+  db.Album.findOne({_id: req.params.albumId}, function(error, album) {
+    if (error) { console.log('error', error); }
+    if (req.body.album_name) { album.album_name = req.body.album_name; }
+    if (req.body.artist_name) { album.artist_name = req.body.artist_name; }
+    if (req.body.relase_year) { album.release_year = req.body.release_year; }
+    album.save(function (error) {
+      if (error) { res.json({ message: 'Could not update album: ' + error});}
+    db.Album.find({}, function(err, albums) {
+        res.json(album);
+          });
+    });
+  });
+});
 
 
 // DELETE /api/albums:id 
@@ -119,6 +126,17 @@ app.delete('/api/albums/:id', function albumDestroy(req,res) {
     res.redirect (200, "/");
   });
 });
+
+
+// UPDATE track???
+// app.put('/api/albums/:id', function albumUpdate)
+//   db.Track.create(req.body, function(err, track) {
+//     if (err) {
+//       console.log('track', err);
+//     }
+//     console.log(track);
+//     res.json(track);
+// });
 
 
 
