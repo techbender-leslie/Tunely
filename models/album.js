@@ -8,6 +8,7 @@ var AlbumSchema = new Schema({
   album_name: String,
   artist_name: String,
   release_year: Number,
+  albumArt: String,
   tracks: [Track.schema]  //how is this different than TrackSchema
 });
 

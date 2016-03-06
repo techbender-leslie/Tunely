@@ -11,6 +11,8 @@ var logger = require('morgan');
 var path = require('path');
 // var ejs = require('ejs');
 
+// var albumArt = require(album-art);
+
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
 
@@ -77,6 +79,14 @@ app.get('/api/albums/:id', function albumShow(req, res) {
   });
 });
 
+// GET api/albums/:id/tracks 
+app.get('/api/albums/:id/tracks', function albumShow(req, res) {
+  console.log('requested album id=', req.params.id);
+  db.Album.findOne({_id: req.params.id}, function(err, album) {
+    res.json(album.tracks);
+  });
+});
+
 // POST /api/albums/:id/tracks
 app.post('/api/albums/:albumId/tracks', function tracksCreate(req, res) {
   console.log('body', req.body);
@@ -95,7 +105,7 @@ app.post('/api/albums/:albumId/tracks', function tracksCreate(req, res) {
 });
 
 
-/////////////////////////////////// UPDATE Album
+///// UPDATE Album
 app.put('/api/albums/:id', function updateAlbum(req, res) {
   console.log('body', req.body);
   db.Album.findOne({_id: req.params.id}, function(error, album) {
@@ -110,7 +120,7 @@ app.put('/api/albums/:id', function updateAlbum(req, res) {
     });
 });
 
-///////////////// DELETE /api/albums:id ///////////////////
+/// DELETE /api/albums:id ///////////////////
 app.delete('/api/albums/:id', function albumDestroy(req,res) {
   console.log(req.params.id);
   // database remove album by ID
@@ -118,7 +128,6 @@ app.delete('/api/albums/:id', function albumDestroy(req,res) {
     if (err) {
       console.log('error', err);
     } 
-    // remove if not needed for console logging
     console.log(album._id);
     //status 200 and redirect back to root directory
     res.redirect (200, "/");
@@ -126,15 +135,39 @@ app.delete('/api/albums/:id', function albumDestroy(req,res) {
 });
 
 
-// UPDATE track???
-// app.put('/api/albums/:id', function albumUpdate)
-//   db.Track.create(req.body, function(err, track) {
-//     if (err) {
-//       console.log('track', err);
-//     }
-//     console.log(track);
-//     res.json(track);
-// });
+//UPDATE track in album
+app.put('/api/albums/:albumId/tracks/:id', function(req, res) {
+  var albumId = req.params.albumId;
+  var trackId = req.params.id;
+  db.Album.findOne({_id: albumId}, function (err, currentAlbum) {
+    var currentTrack = currentAlbum.tracks.id(trackId);
+      currentTrack.track_name = req.body.track_name;
+      currentTrack.track_num = req.body.track_num;
+      currentTrack.bpm = req.body.bpm;
+
+    currentAlbum.save(function(err, saved) {
+      if(err) {console.log('error', err); }
+      res.json(saved);
+    });
+  });
+});
+
+//DELETE track from album
+app.delete('/api/albums/:albumId/tracks/:id', function(req, res) {
+  var albumId = req.params.albumId;
+  var songId = req.params.id;
+  //console.log(req.params);
+  db.Album.findOne({_id: albumId}, function (err, currentAlbum){
+    if (err) {console.log(error, err);}
+    var currentTrack = currentAlbum.tracks.id(trackId);
+
+    currentTrack.remove();
+    currentAlbum.save(function(err, saved) {
+      if(err) { console.log('error', err); }
+      res.json(saved);
+    });
+  });
+});
 
 
 /**********
