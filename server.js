@@ -94,23 +94,21 @@ app.post('/api/albums/:albumId/tracks', function tracksCreate(req, res) {
   });
 });
 
+
 /////////////////////////////////// UPDATE Album
 app.put('/api/albums/:id', function updateAlbum(req, res) {
   console.log('body', req.body);
-  db.Album.findOne({_id: req.params.albumId}, function(error, album) {
+  db.Album.findOne({_id: req.params.id}, function(error, album) {
     if (error) { console.log('error', error); }
-    if (req.body.album_name) { album.album_name = req.body.album_name; }
-    if (req.body.artist_name) { album.artist_name = req.body.artist_name; }
-    if (req.body.relase_year) { album.release_year = req.body.release_year; }
-    album.save(function (error) {
-      if (error) { res.json({ message: 'Could not update album: ' + error});}
-    db.Album.find({}, function(err, albums) {
-        res.json(album);
+    album.album_name = req.body.album_name; 
+    album.artist_name = req.body.artist_name; 
+    album.release_year = req.body.release_year;
+    album.save(function (error, saved) {
+      if (error) { console.log('Could not update album: ' + error); }
+      res.json(saved);
           });
     });
-  });
 });
-
 
 ///////////////// DELETE /api/albums:id ///////////////////
 app.delete('/api/albums/:id', function albumDestroy(req,res) {
@@ -137,7 +135,6 @@ app.delete('/api/albums/:id', function albumDestroy(req,res) {
 //     console.log(track);
 //     res.json(track);
 // });
-
 
 
 /**********

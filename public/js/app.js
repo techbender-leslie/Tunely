@@ -42,6 +42,8 @@ $('#albums').on('click', '.add-track', function(e) {
     $('#saveTrack').on('click', handleNewTrackSubmit); 
     $('#albums').on('click', '.delete-album', handleDeleteAlbumClick); 
     $('#albums').on('click', '.update-album', handleEditAlbumClick);
+    $('#albums').on('click', '.put-album', handleSaveChangesClick);
+
 });
 
 
@@ -75,6 +77,7 @@ function handleEditAlbumClick(e) {
   $(this).parent().find('.btn').hide();
   $(this).parent().find('.default-hidden').show();
 
+
   // replace current spans with inputs
   var albumName = $albumInfo.find('span.album-name').text();
   $albumInfo.find('span.album-name').html('<input class="edit-album-name" value="' + albumName + '"></input>');
@@ -86,6 +89,27 @@ function handleEditAlbumClick(e) {
   $albumInfo.find('span.album-release-year').html('<input class="edit-album-release-year" value="' + releaseYear + '"></input>');
 }
 
+
+function handleSaveChangesClick(event){
+  var albumId = $(this).parents('.album').data('album-id'); 
+  var $albumInfo = getAlbumInfoById(albumId); 
+
+  var data = {
+    album_name: $albumInfo.find('.edit-album-name').val(),
+    artist_name: $albumInfo.find('.edit-artist-name').val(),
+    release_year: $albumInfo.find('.edit-album-release-year').val()
+  }; 
+
+  $.ajax({
+    method: 'PUT',
+    url: '/api/albums/' + albumId,
+    data: data,
+    success: function(data) {
+      console.log(data);
+      $albumInfo.replaceWith(generateAlbumHtml(data));
+    }
+  });
+}
 
 //////////// DELETE ///////////////
 
@@ -165,7 +189,7 @@ function buildTracksHtml(tracks) {
 // });
 
 // this function takes a single album and renders it to the page
-function renderAlbum(album){
+function generateAlbumHtml(album){
   console.log('rendering album:', album);
 
   var albumHtml =
@@ -209,6 +233,7 @@ function renderAlbum(album){
   "              <div class='panel-footer'>" +
   "                <button class='btn btn-primary add-track'>Add Track</button>" +
   "                <button class='btn btn-info update-album'>Edit Album</button>" +
+      "              <button class='btn btn-success put-album default-hidden'>Save Changes</button>" +
   "                <button class='btn btn-danger delete-album'>Delete Album</button>" +
   "              </div>" +
 
@@ -216,7 +241,15 @@ function renderAlbum(album){
   "          </div>" +
   "          <!-- end one album -->";
 
+  return albumHtml;
+}
+
+// this function takes a single album and renders it to the page
+function renderAlbum(album) {
+  var html = generateAlbumHtml(album);
+  console.log('rendering album:', album);
+
   // render to the page with jQuery
-  $('#albums').prepend(albumHtml);
+  $('#albums').prepend(html);
 }
 
