@@ -114,7 +114,7 @@ function handleDeleteTrackClick(event) {
   var trackId = $(this).data('track-id');
   var albumId = $(this).closest('form').attr('id');
   var $thisTrack = $(this);
-  var requestUrl = ('/api/tracks/' + trackId + '/tracks' + trackId);
+  var requestUrl = ('/api/albums/' + albumId + '/tracks/' + trackId);
   console.log('DELETE', requestUrl);
   $.ajax({
     method: 'DELETE',

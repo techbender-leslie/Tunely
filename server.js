@@ -155,7 +155,7 @@ app.put('/api/albums/:albumId/tracks/:id', function(req, res) {
 //DELETE track from album
 app.delete('/api/albums/:albumId/tracks/:id', function(req, res) {
   var albumId = req.params.albumId;
-  var songId = req.params.id;
+  var trackId = req.params.id;
   //console.log(req.params);
   db.Album.findOne({_id: albumId}, function (err, currentAlbum){
     if (err) {console.log(error, err);}
