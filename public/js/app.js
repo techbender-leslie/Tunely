@@ -11,7 +11,10 @@ $(document).ready(function() {
     });
   });
 
-  // Use jquery to capture the form values
+
+//////////////////////////////////////////////////////
+//Use jquery to capture the form values
+
   $('#album-form form').submit(function(event) {
     event.preventDefault();
     var formData = $(this).serialize();
@@ -23,56 +26,61 @@ $(document).ready(function() {
     $(this).trigger("reset");
   });
 
-  $('#albums').on('click', '.add-track', function(event) {
-    // console.log('testing on click add track');
-    var id= $(this).parents('.album').data('album-id');
-    // console.log('id',id);
+
+//////////////////////////////////////////////////////////
+
+$('#albums').on('click', '.add-track', function(e) {
+    console.log('asdfasdfasdf');
+    var id= $(this).parents('.album').data('album-id'); // "5665ff1678209c64e51b4e7b"
+    console.log('id',id);
     $('#trackModal').data('album-id', id);
     $('#trackModal').modal();
-  });
+});
+    $('#saveTrack').on('click', handleNewTrackSubmit); 
+    $('#albums').on('click', '.delete-album', handleDeleteAlbumClick); 
+    $('#albums').on('click', '.update-album', handleEditAlbumClick);
+    $('#albums').on('click', '.put-album', handleSaveChangesClick);
 
-  // On click events for delete, edit, and put/save
-  $('#saveTrack').on('click', handleNewTrackSubmit); 
-  $('#albums').on('click', '.delete-album', handleDeleteAlbumClick);
-  $('#albums').on('click', '.edit-album', handleEditAlbumClick);
-  $('#albums').on('click', '.put-album', handleSaveChangesClick);
+});
 
-}); // end document ready 
 
-//// EDIT AND SAVE ALBUM ////
+/////////////* End document ready *///////////////////
 
-// accepts an album id (mongo id) and return the row in which that album exists
-function getAlbumRowById(id) {
-  return $('[data-album-id=' + id + ']'); 
+function getAlbumInfoById(id) {
+  return $('[data-album-id=' + id + ']');
 }
 
-function handleEditAlbumClick(event) {
-  var albumId = $(this).parents('.album').data('album-id'); 
-  var $albumRow = getAlbumRowById(albumId); 
-  console.log(albumId); 
+function handleEditAlbumClick(e) {
+  var albumId = $(this).parents('.album').data('album-id');
+  var $albumInfo = getAlbumInfoById(albumId);
+
+  console.log('attempt to edit id', albumId);
+
   // replace edit button with save button
   $(this).parent().find('.btn').hide();
   $(this).parent().find('.default-hidden').show();
 
+
   // replace current spans with inputs
-  var albumName = $albumRow.find('span.album-name').text();
-  $albumRow.find('span.album-name').html('<input class="edit-album-name" value="' + albumName + '"></input>');
+  var albumName = $albumInfo.find('span.album-name').text();
+  $albumInfo.find('span.album-name').html('<input class="edit-album-name" value="' + albumName + '"></input>');
 
-  var artistName = $albumRow.find('span.artist-name').text();
-  $albumRow.find('span.artist-name').html('<input class="edit-artist-name" value="' + artistName + '"></input>');
+  var artistName = $albumInfo.find('span.artist-name').text();
+  $albumInfo.find('span.artist-name').html('<input class="edit-artist-name" value="' + artistName + '"></input>');
 
-  var releaseYear = $albumRow.find('span.release-year').text();
-  $albumRow.find('span.release-year').html('<input class="edit-release-year" value="' + releaseYear + '"></input>');
+  var releaseYear = $albumInfo.find('span.album-release-year').text();
+  $albumInfo.find('span.album-release-year').html('<input class="edit-album-release-year" value="' + releaseYear + '"></input>');
 }
+
 
 function handleSaveChangesClick(event){
   var albumId = $(this).parents('.album').data('album-id'); 
-  var $albumRow = getAlbumRowById(albumId); 
+  var $albumInfo = getAlbumInfoById(albumId); 
 
   var data = {
-    album_name: $albumRow.find('.edit-album-name').val(),
-    artist_name: $albumRow.find('.edit-artist-name').val(),
-    release_year: $albumRow.find('.edit-album-release-year').val()
+    album_name: $albumInfo.find('.edit-album-name').val(),
+    artist_name: $albumInfo.find('.edit-artist-name').val(),
+    release_year: $albumInfo.find('.edit-album-release-year').val()
   }; 
 
   $.ajax({
@@ -81,16 +89,15 @@ function handleSaveChangesClick(event){
     data: data,
     success: function(data) {
       console.log(data);
-      $albumRow.replaceWith(generateAlbumHtml(data));
+      $albumInfo.replaceWith(generateAlbumHtml(data));
     }
   });
 }
 
+//////////// DELETE ///////////////
 
-//// DELETE ALBUM ////
 
 function handleDeleteAlbumClick(event){
-
   var albumId = $(this).parents('.album').data('album-id'); 
   console.log("delete" + albumId);
   $.ajax({
@@ -101,13 +108,9 @@ function handleDeleteAlbumClick(event){
       $('[data-album-id=' + albumId + ']').remove();
     }
   });
-
 }
 
-
-//// NEW TRACK SUBMIT ////
 function handleNewTrackSubmit(event) {
-
   var albumId = $('#trackModal').data('album-id');
   var trackName = $('#trackName').val();
   var trackNumber = $('#trackNumber').val();
@@ -140,11 +143,9 @@ function handleNewTrackSubmit(event) {
     $('#trackBpm').val('');
     $('#trackModal').modal('hide');
   });
-
 }
 
 function buildTracksHtml(tracks) {
-
   var trackText = " ";
   tracks.forEach(function(track) {
      trackText = trackText + "#" + track.track_num + " " + track.track_name + "  &ndash; BPM: " + track.bpm + " <br>";
@@ -159,12 +160,17 @@ function buildTracksHtml(tracks) {
 
 }
 
-//// RENDER ALBUM // 
+// var TrackSchema = new Schema({
+//   track_name: String,  
+//   track_num: Number,
+//   bpm: Number,
+//   notes: String
+// });
 
-function generateAlbumHtml(album) {
-
+// this function takes a single album and renders it to the page
+function generateAlbumHtml(album){
   console.log('rendering album:', album);
-  
+
   var albumHtml =
   "        <!-- one album -->" +
   "        <div class='row album' data-album-id='" + album._id + "'>" +
@@ -181,23 +187,19 @@ function generateAlbumHtml(album) {
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Album Name:</h4>" +
   "                        <span class='album-name'>" + album.album_name + "</span>" +
+  "                       </li>" +
+  "                      <li class='list-group-item'>" +
+  "                        <h4 class='inline-header'>Album Id:</h4>" +
+  "                       <span class='album-id'>" + album._id + "</span>" +
   "                      </li>" +
-
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Artist Name:</h4>" +
   "                        <span class='artist-name'>" + album.artist_name + "</span>" +
   "                      </li>" +
-
-   "                      <li class='list-group-item'>" +
-  "                        <h4 class='inline-header'>Release Year:</h4>" +
-  "                        <span class='release-year'>" + album.release_year + "</span>" +
-  "                      </li>" +
-
   "                      <li class='list-group-item'>" +
-  "                        <h4 class='inline-header'>Album ID:</h4>" +
-  "                       <span class='album-id'>" + album._id + "</span>" +
+  "                        <h4 class='inline-header'>Released Year:</h4>" +
+  "                        <span class='album-release-year'>" + album.release_year + "</span>" +
   "                      </li>" +
-
 
     buildTracksHtml(album.tracks) +
   "                    </ul>" +
@@ -207,23 +209,23 @@ function generateAlbumHtml(album) {
   "              </div>" + // end of panel-body
   "              <div class='panel-footer'>" +
   "                <button class='btn btn-primary add-track'>Add Track</button>" +
-  "                <button class='btn btn-danger delete-album'>Delete Album</button>" +
-  "                <button class='btn btn-info edit-album'>Edit Album</button>" +
+  "                <button class='btn btn-info update-album'>Edit Album</button>" +
   "                <button class='btn btn-success put-album default-hidden'>Save Changes</button>" +
+  "                <button class='btn btn-danger delete-album'>Delete Album</button>" +
   "              </div>" +
   "            </div>" +
   "          </div>" +
   "          <!-- end one album -->";
 
   return albumHtml;
-
 }
 
-// render album to page 
+// this function takes a single album and renders it to the page
 function renderAlbum(album) {
   var html = generateAlbumHtml(album);
   console.log('rendering album:', album);
 
+  // render to the page with jQuery
   $('#albums').prepend(html);
 }
 
