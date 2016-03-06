@@ -41,7 +41,7 @@ $('#albums').on('click', '.add-track', function(e) {
 });
     $('#saveTrack').on('click', handleNewTrackSubmit); 
     $('#albums').on('click', '.delete-album', handleDeleteAlbumClick); 
-    $('#albums').on('click', '.update-album', handleEditalbumclick);
+    $('#albums').on('click', '.update-album', handleEditAlbumClick);
 });
 
 
@@ -61,15 +61,13 @@ $('#albums').on('click', '.add-track', function(e) {
 
 /////////////* End document ready *///////////////////
 
-// function getAlbumRowById(id) {
-//   return $('[data-album-id=' + id + ']');
-// }
+function getAlbumInfoById(id) {
+  return $('[data-album-id=' + id + ']');
+}
 
 function handleEditAlbumClick(e) {
   var albumId = $(this).parents('.album').data('album-id');
-  var $gomez = $('[data-album-id=' + albumId + ']');
-
-  // var $albumRow = getAlbumRowById(albumId);
+  var $albumInfo = getAlbumInfoById(albumId);
 
   console.log('attempt to edit id', albumId);
 
@@ -78,14 +76,14 @@ function handleEditAlbumClick(e) {
   $(this).parent().find('.default-hidden').show();
 
   // replace current spans with inputs
-  var albumName = $gomez.find('span.album-name').text();
-  $gomez.find('span.album-name').html('<input class="edit-album-name" value="' + albumName + '"></input>');
+  var albumName = $albumInfo.find('span.album-name').text();
+  $albumInfo.find('span.album-name').html('<input class="edit-album-name" value="' + albumName + '"></input>');
 
-  var artistName = $gomez.find('span.artist-name').text();
-  $gomez.find('span.artist-name').html('<input class="edit-artist-name" value="' + artistName + '"></input>');
+  var artistName = $albumInfo.find('span.artist-name').text();
+  $albumInfo.find('span.artist-name').html('<input class="edit-artist-name" value="' + artistName + '"></input>');
 
-  var releaseDate = $gomez.find('span.album-release-date').text();
-  $gomez.find('span.album-release-date').html('<input class="edit-album-release-date" value="' + releaseDate + '"></input>');
+  var releaseYear = $albumInfo.find('span.album-release-year').text();
+  $albumInfo.find('span.album-release-year').html('<input class="edit-album-release-year" value="' + releaseYear + '"></input>');
 }
 
 
@@ -169,6 +167,7 @@ function buildTracksHtml(tracks) {
 // this function takes a single album and renders it to the page
 function renderAlbum(album){
   console.log('rendering album:', album);
+
   var albumHtml =
   "        <!-- one album -->" +
   "        <div class='row album' data-album-id='" + album._id + "'>" +
@@ -188,16 +187,16 @@ function renderAlbum(album){
   "                       </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Album Id:</h4>" +
-  "                       <span class='album-name'>" + album._id + "</span>" +
+  "                       <span class='album-id'>" + album._id + "</span>" +
   "                      </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Artist Name:</h4>" +
   "                        <span class='artist-name'>" + album.artist_name + "</span>" +
   "                      </li>" +
-  // "                      <li class='list-group-item'>" +
-  // "                        <h4 class='inline-header'>Released Year:</h4>" +
-  // "                        <span class='album-releaseDate'>" + album.release_year + "</span>" +
-  // "                      </li>" +
+  "                      <li class='list-group-item'>" +
+  "                        <h4 class='inline-header'>Released Year:</h4>" +
+  "                        <span class='album-release-year'>" + album.release_year + "</span>" +
+  "                      </li>" +
     buildTracksHtml(album.tracks) +
 
   "                    </ul>" +
@@ -211,7 +210,6 @@ function renderAlbum(album){
   "                <button class='btn btn-primary add-track'>Add Track</button>" +
   "                <button class='btn btn-info update-album'>Edit Album</button>" +
   "                <button class='btn btn-danger delete-album'>Delete Album</button>" +
-  "                 <button class='btn btn-info edit-album'>Edit Album</button>" +
   "              </div>" +
 
   "            </div>" +

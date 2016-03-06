@@ -18,8 +18,8 @@
   margin-right: 12px;
 }
 
-.edit-album,
-.delete-album {
+.delete-album
+ {
 	float: right;
 	margin-left: 3px;
 	margin-right: 3px;
