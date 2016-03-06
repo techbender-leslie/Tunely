@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/tgaff/tunely#readme",
   "dependencies": {
+    "album-art": "^1.0.2",
     "body-parser": "^1.13.2",
     "debug": "~2.2.0",
     "ejs": "^2.4.1",
