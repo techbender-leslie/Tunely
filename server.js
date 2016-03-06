@@ -104,6 +104,20 @@ app.post('/api/albums/:albumId/tracks', function tracksCreate(req, res) {
   });
 });
 
+/// DELETE /api/albums:id ///////////////////
+app.delete('/api/albums/:id', function albumDestroy(req,res) {
+  console.log(req.params.id);
+  // database remove album by ID
+  db.Album.remove({_id: req.params.id}, function(err, album){
+    if (err) {
+      console.log('error', err);
+    } 
+    console.log(album._id);
+    //status 200 and redirect back to root directory
+    res.redirect (200, "/");
+  });
+});
+
 
 ///// UPDATE Album
 app.put('/api/albums/:id', function updateAlbum(req, res) {
@@ -118,20 +132,6 @@ app.put('/api/albums/:id', function updateAlbum(req, res) {
       res.json(saved);
           });
     });
-});
-
-/// DELETE /api/albums:id ///////////////////
-app.delete('/api/albums/:id', function albumDestroy(req,res) {
-  console.log(req.params.id);
-  // database remove album by ID
-  db.Album.remove({_id: req.params.id}, function(err, album){
-    if (err) {
-      console.log('error', err);
-    } 
-    console.log(album._id);
-    //status 200 and redirect back to root directory
-    res.redirect (200, "/");
-  });
 });
 
 

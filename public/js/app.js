@@ -42,7 +42,7 @@ $('#albums').on('click', '.add-track', function(e) {
     $('#albums').on('click', '.put-album', handleSaveChangesClick);
     $('#albums').on('click', '.edit-tracks', handleEditTracksClick);
     $('#editTracksModal').on('click', '.delete-track', handleDeleteTrackClick);
-    $('#editTracksModal').on('submit', 'form', handeUpdateTrack);
+    $('#editTracksModal').on('submit', 'form', handleUpdateTrack);
 });
 
 
@@ -69,8 +69,6 @@ function handleUpdateTrack(event) {
     }
   });
 }
-
-
 
 
 // handles when you click edit tracks button, calls edit tracks modal
