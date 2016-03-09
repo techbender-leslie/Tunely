@@ -1,26 +1,29 @@
 // SERVER-SIDE JAVASCRIPT
 
 
-// dependencies
+// Middleware
 var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
-
+var passport = require('passport');
+var expressSession = require('express-session');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var path = require('path');
-// var ejs = require('ejs');
-
-// var albumArt = require(album-art);
+var cookieParser = require('cookie-parser');
+var hbs = require('hbs');
 
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
-
 app.use(logger('dev'));
 //app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.set('views', './views');
-// app.set('view engine', 'ejs');
+app.set('views', path.join(_dirname, 'views'));
+app.set('view engine', 'hbs');
+
+// Setting up the Passport Strategies
+require("./config/passport")(passport);
+
 
 /************
  * DATABASE *
@@ -32,12 +35,41 @@ var db = require('./models');
  */
 
 app.get('/', function homepage (req, res) {
-  res.sendFile(__dirname + '/views/index.html');
+  res.sendFile(__dirname + '/views/index.hbs');
 });
 
 /*
  * JSON API Endpoints
  */
+
+ app.get('/', function(req, res){
+  res.render('button', {user: req.user});
+});
+
+app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email'} ));
+
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', {
+    successRedirect: '/',
+    failureRedirect: '/'
+  })
+);
+
+// <- GitHub
+app.get('/auth/github',
+  passport.authenticate('github', { scope: "user" })
+);
+
+app.get('/auth/github/callback',
+  passport.authenticate('github', { successRedirect: '/', failureRedirect: '/' })
+);
+
+// Logout
+app.get("/logout", function(req, res){
+  req.logout();
+  res.redirect("/");
+});
+
 
 app.get('/api', function api_index (req, res){
   res.json({
@@ -168,6 +200,8 @@ app.delete('/api/albums/:albumId/tracks/:id', function(req, res) {
     });
   });
 });
+
+
 
 
 /**********
