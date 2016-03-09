@@ -18,7 +18,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(logger('dev'));
 //app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.set('views', path.join(_dirname, 'views'));
+app.set('views', './views');
 app.set('view engine', 'hbs');
 
 // Setting up the Passport Strategies
@@ -35,7 +35,7 @@ var db = require('./models');
  */
 
 app.get('/', function homepage (req, res) {
-  res.sendFile(__dirname + '/views/index.hbs');
+  res.sendFile(__dirname + '/views/index.html');
 });
 
 /*
