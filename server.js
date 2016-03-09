@@ -20,6 +20,7 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('views', './views');
 app.set('view engine', 'hbs');
+hbs.registerPartials(__dirname + '/views/partials');
 
 // Setting up the Passport Strategies
 require("./config/passport")(passport);
@@ -35,7 +36,7 @@ var db = require('./models');
  */
 
 app.get('/', function homepage (req, res) {
-  res.sendFile(__dirname + '/views/index.html');
+  res.render("index");
 });
 
 /*
