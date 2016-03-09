@@ -14,10 +14,16 @@ var cookieParser = require('cookie-parser');
 var hbs = require('hbs');
 
 // serve static files from public folder
-app.use(express.static(__dirname + '/public'));
+// Middleware
+app.use(cookieParser() );
+app.use(expressSession({secret: 'mySecretKey'}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(logger('dev'));
-//app.use(bodyParser.json());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(__dirname + '/public'));
 app.set('views', './views');
 app.set('view engine', 'hbs');
 hbs.registerPartials(__dirname + '/views/partials');
@@ -54,15 +60,6 @@ app.get('/auth/facebook/callback',
     successRedirect: '/',
     failureRedirect: '/'
   })
-);
-
-// <- GitHub
-app.get('/auth/github',
-  passport.authenticate('github', { scope: "user" })
-);
-
-app.get('/auth/github/callback',
-  passport.authenticate('github', { successRedirect: '/', failureRedirect: '/' })
 );
 
 // Logout
